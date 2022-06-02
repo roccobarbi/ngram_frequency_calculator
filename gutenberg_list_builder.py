@@ -20,7 +20,7 @@ def main():
             if requests.head(book).status_code == 200:
                 text = requests.get(book).text
                 start = text.index("*** START OF THE PROJECT GUTENBERG EBOOK") + 40
-                start = text[start:].index("***") + 3
+                start = text.start + text[start:].index("***") + 3
                 end = text.index("*** END")
                 language_s = text.index("Language:") + 9
                 language_e = text.index("\n", language_s)
@@ -43,37 +43,6 @@ def main():
         print("{:>10}: {:0>3}".format(count, unknown))
     with open(args.out, "w") as outfile:
         outfile.write(json.dumps(books))
-    # for i in range(20):
-    #     book = BASE_URL.format(i, i)
-    #     print(str(i))
-    #     r = requests.get(book)
-    #     if r.status_code == 200:
-    #         try:
-    #             start = r.text.index("*** START OF THE PROJECT GUTENBERG EBOOK") + 40
-    #             start = r.text[start:].index("***") + 3
-    #             language_s = r.text.index("Language:") + 9
-    #             language_e = r.text.index("\n", language_s)
-    #             title_s = r.text.index("Title:") + 6
-    #             title_e = r.text.index("\n", title_s)
-    #             book = {
-    #                 "start": start,
-    #                 "end": r.text.index("*** END"),
-    #                 "language": r.text[language_s:language_e].strip(),
-    #                 "title": r.text[title_s:title_e].strip()
-    #             }
-    #         except:
-    #             print("no start found")
-    #         for line in r.text.split("\n"):
-    #             if line[10:17] == "English":
-    #                 print(book)
-    #                 try:
-    #                     print("{} : {}", r.text.index("*** START OF THE PROJECT GUTENBERG EBOOK"), r.text.index("*** END"))
-    #                 except:
-    #                     print("no start found")
-    #                 break
-    #     else:
-    #         pass
-    #         # print("{}: ERROR {}".format(book, r.status_code))
 
 
 if __name__ == "__main__":
