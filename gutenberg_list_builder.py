@@ -20,7 +20,7 @@ def main():
             if requests.head(book).status_code == 200:
                 text = requests.get(book).text
                 start = text.index("*** START OF THE PROJECT GUTENBERG EBOOK") + 40
-                start = text.start + text[start:].index("***") + 3
+                start += text[start:].index("***") + 3
                 end = text.index("*** END")
                 language_s = text.index("Language:") + 9
                 language_e = text.index("\n", language_s)
